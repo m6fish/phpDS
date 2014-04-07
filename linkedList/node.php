@@ -2,9 +2,9 @@
 
 class node {
     
-    $prev;
-    $data;
-    $next;
+    public $prev;
+    public $data;
+    public $next;
 
     public function __construct(){
         $argNum = func_num_args();
@@ -21,9 +21,4 @@ class node {
         }
 
     }
-
-
-
-
-    
 }

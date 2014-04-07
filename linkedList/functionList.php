@@ -1,6 +1,7 @@
 <?php
+
 interface functionList{
-    public function add($index, $obj);
+    public function insert($index, $obj);
     public function addFirst($obj);
     public function addLast($obj);
     public function get($index);
