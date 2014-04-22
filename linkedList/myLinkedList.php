@@ -23,20 +23,22 @@ class myLinkedList implements functionList
         $nextItem = $this->get($index);
         
         //insert
-        $node->next = $nextItem->next;
-        $node->prev = $nextItem;
+        $node->next = $nextItem;
+        $node->prev = $nextItem->prev;
         
-        $nextItem->next->prev = $node;
-        $nextItem->next = $node;
+        $nextItem->prev = $node;
+        $node->prev->next = $node;
         
-        $this->size = 0;
+        $this->size += 1;
+
+        return $node->data;
     }
     
     public function addFirst($obj){
         $node = new node();
         $node->data = $obj;
 
-        if(null == $head){
+        if(null == $this->head){
             $node->next = null;
             
             $this->head = $node;
@@ -69,9 +71,8 @@ class myLinkedList implements functionList
     }
 
     public function get($index){
-         //get nextItem
-        $nextItem = $head;
-        for($i = 1; $i < $index; $i ++ ) {
+        $nextItem = $this->head;
+        for($i = 1; $i <= $index; $i ++ ) {
             $nextItem = $nextItem->next;
         }
 
@@ -85,10 +86,30 @@ class myLinkedList implements functionList
     public function getLast(){
         return $this->tail;
     }
+
+    private function getByData($targetData){
+        $targetNode = $this->head;
+        
+        for ($i =0; $i< $this->size; $i++ ) {
+            if($targetData == $targetNode->data){
+                break;    
+            }
+            $targetNode = $targetNode->next;
+        }
+
+        return $targetNode;
+    }
     
     
-    public function remove($target){
+    public function remove($targetData){
+        $targetNode = $this->getByData($targetData);
+
+        $targetNode->prev->next = $targetNode->next;
+        $targetNode->next->prev = $targetNode->prev;
+
         echo "remove!\n";
+        $this->size -=1;
+        return $targetNode;
     }
     
     
@@ -98,9 +119,14 @@ class myLinkedList implements functionList
 
     public function printList(){
         //pass through the List
-        $nextItem = $head;
+        $nextItem = $this->head;
+        
+        if(null == $nextItem){
+            echo "No data!\n";
+            return false;
+        }
 
-        echo "head:" . $nextItem->data;
+        echo "List:" . $nextItem->data;
         for($i = 1; $i < $this->size; $i ++ ) {
             $nextItem = $nextItem->next;
             echo "/" . $nextItem->data;
