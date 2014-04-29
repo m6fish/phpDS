@@ -47,6 +47,19 @@ class stack implements functionList
         $this->length += 1;
     }
 
+    public function printStack(){
+        
+        echo "---\n";
+        echo "[";
+
+        foreach($this->dataArr as $data){
+            echo $data . " ";
+        }
+        echo "\n";
+        echo "---\n";
+
+    }
+
     public function shift(){
         
     }
